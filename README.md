@@ -25,11 +25,7 @@ CAMIE consists of four stages:
 > Replace the figure below with the main framework figure from the paper.
 
 ```text
-<p align="center">
-
-  <img src="supp/overall_camie.png" alt="Overall of CAMIE" width="900"/>
-
-</p>
+![CAMIE overview](supp/overall_camie.png)
 ```
 
 ---
