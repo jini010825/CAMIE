@@ -134,48 +134,6 @@ For gradient- and perturbation-based baselines, node- or edge-level scores are c
 
 ---
 
-## Main Evaluation Metric
-
-### S2-based Fidelity F1
-
-For a molecule--assay pair, CAMIE selects the top-k motifs as the explanation set \(S_2\). The remaining motifs are denoted by \(S_1\).
-
-We evaluate explanation quality primarily by **S2-based Fidelity F1**:
-
-- mask the selected motifs \(S_2\)
-- recompute predictions
-- binarize probabilities using **threshold = 0.5**
-- measure the resulting **F1 drop**
-
-A larger S2-based Fidelity F1 indicates that the selected motifs are more necessary for the assay-specific prediction.
-
----
-
-## Main Experiments
-
-The project includes the following experimental components.
-
-1. **Main result: Fidelity F1**  
-   Main comparison across CAMIE and post-hoc baselines using S2-based Fidelity F1.
-
-2. **Low-resource analysis**  
-   Assay-level analysis under low-resource settings.
-
-3. **Task similarity alignment**  
-   Relationship between assay similarity and explanation similarity.
-
-4. **Model-intrinsic shift vs. fidelity**  
-   Analysis of whether assay-specific explanation shift is coupled with improved fidelity.
-
-5. **Local evidence examples**  
-   Qualitative comparison of motif selection across assays for the same molecule.
-
-6. **Ablation study**  
-   - `context-only` vs. `graph-only` vs. `CAMIE`
-   - `ST-MIE` vs. `CAMIE`
-
----
-
 ## Execution Pipeline
 
 ### Step 1. Train the CAMIE scorer
