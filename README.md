@@ -26,50 +26,6 @@ CAMIE consists of four stages:
 
 ---
 
-## Problem Setting
-
-Let a pretrained multi-task GNN predictor be
-
-\[
-F(G) \in \mathbb{R}^T,
-\]
-
-where \(G\) is a molecular graph and \(T\) is the number of assays/tasks.
-
-For a motif \(m_s\) and assay \(a_j\), CAMIE defines the assay-specific pseudo target as
-
-\[
-t_{s,j} = \left|F(G)_j - F(G \setminus m_s)_j\right|,
-\]
-
-where \(G \setminus m_s\) denotes the perturbed graph obtained by masking the motif.
-
-CAMIE then trains a context-aware scorer
-
-\[
-q(G, m_s, a_j; \theta)
-\]
-
-to estimate this assay-specific motif-removal response. The final explanation is obtained by ranking motifs according to their predicted scores and selecting the top-k motifs.
-
----
-
-## Main Contributions
-
-- **Context-aware explanation for multi-task GNNs**  
-  CAMIE explains predictions at the level of a **molecule--assay pair**, rather than the molecule alone.
-
-- **Knowledge-distillation-inspired pseudo supervision**  
-  CAMIE uses the frozen backbone model's motif-removal response differences as pseudo targets, without retraining the backbone.
-
-- **Shared assay-conditioned motif scorer**  
-  CAMIE learns a single scorer shared across assays, enabling **cross-assay transfer** and better behavior in **low-resource assays**.
-
-- **Faithfulness-oriented evaluation**  
-  CAMIE is evaluated primarily with **S2-based Fidelity F1**, together with additional analyses on low-resource behavior, task similarity alignment, model-intrinsic shift, local evidence, and ablations.
-
----
-
 ## Repository Structure
 
 ```directory
@@ -157,66 +113,6 @@ We use **Bemis--Murcko scaffold splitting** with a **7:1:2** ratio and **BRICS**
 
 ---
 
-## Backbone Predictor
-
-All CAMIE explanations are built on top of a **frozen pretrained multi-task molecular GNN**.
-
-### Backbone configuration
-
-- **GNN type**: GIN
-- **# layers**: 5
-- **hidden dimension**: 300
-- **dropout**: 0.5
-- **graph pooling**: mean
-
-The backbone outputs assay-specific logits for all tasks, and CAMIE uses these outputs to construct pseudo targets.
-
----
-
-## CAMIE Scorer
-
-### Assay context
-
-- **assay encoder**: BioBERT
-- **context embedding dimension**: 768
-
-### Training target
-
-CAMIE uses:
-
-- `pseudo_target_logit_diff`
-
-as the default pseudo supervision target.
-
-### Training configuration
-
-- **optimizer**: Adam
-- **learning rate**: 1e-3
-- **weight decay**: 1e-5
-- **batch size**: 512
-- **epochs**: 50
-- **split mode**: all
-- **random seeds**: 0--9
-
-### Joint MLP scorer
-
-- **hidden dimension**: 256
-- **# layers**: 3
-- **dropout**: 0.2
-
-### Explanation setting
-
-- **top-k motifs**: 2 (main result)
-- **fidelity threshold**: 0.5
-
-For sensitivity analysis, we additionally evaluate:
-
-\[
-k \in \{1,2,3,4,5\}.
-\]
-
----
-
 ## Baselines
 
 We compare CAMIE against representative post-hoc explanation baselines.
@@ -233,8 +129,6 @@ We compare CAMIE against representative post-hoc explanation baselines.
 ### Perturbation-based
 - **GNNExplainer**
 - **PGExplainer**
-
-> GraphMask and SubgraphX can be added here if/when their implementations are finalized in this repository.
 
 For gradient- and perturbation-based baselines, node- or edge-level scores are converted to motif-level scores using a shared aggregation protocol.
 
@@ -326,14 +220,6 @@ python -m baselines.evaluate.compute_fidelity_f1_single \
   --model mse \
   --seed 0
 ```
-
-> **Canonical MSE decomposition CSV**  
-> Going forward, the canonical MSE decomposition file is:
->
-> `assets/scoring/decomposition/ablation/mse/motif_decomposition_table_seed0.csv`
->
-> The newer seed-specific path under `assets/scoring/mse/...` is used only for runtime-related summaries and should not be treated as the main decomposition source.
-
 ---
 
 ## Main Outputs
