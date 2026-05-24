@@ -171,9 +171,8 @@ The project includes the following experimental components.
    Qualitative comparison of motif selection across assays for the same molecule.
 
 6. **Ablation study**  
-   - `ctx` vs. `graph` vs. `joint_mlp`
-   - `joint_linear` vs. `joint_mlp`
-   - `concat_mlp` vs. `joint_mlp`
+   - `context-only` vs. `graph-only` vs. `CAMIE`
+   - `ST-MIE` vs. `CAMIE`
 
 ---
 
