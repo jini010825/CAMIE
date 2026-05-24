@@ -1,4 +1,4 @@
-# CAMIE: Context-Aware Motif Importance Explanations for Multi-Task GNNs
+# CAMIE: Context-Aware Subgraph Explanations for Multi-Task GNNs
 
 Welcome to the anonymous official implementation codebase for **CAMIE**, a post-hoc explanation framework for **multi-task molecular GNNs**.
 
