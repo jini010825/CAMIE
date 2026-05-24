@@ -22,11 +22,7 @@ CAMIE consists of four stages:
 4. **Top-k motif explanation**  
    At inference time, CAMIE ranks motifs for a queried assay and returns the top-k motifs as the explanation.
 
-> Replace the figure below with the main framework figure from the paper.
-
-```text
 ![CAMIE overview](supp/overall_camie.png)
-```
 
 ---
 
